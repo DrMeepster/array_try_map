@@ -2,6 +2,8 @@
 //!
 //! This crate requires nightly.
 
+#![doc(html_root_url = "https://docs.rs/array_try_map/0.1.0")]
+
 #![no_std]
 #![feature(
     min_const_generics,
