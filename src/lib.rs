@@ -1,4 +1,6 @@
 //! Adds [`try_map`](ArrayExt::try_map) and [`map2`](ArrayExt::try_map) methods to arrays.
+//!
+//! This crate requires nightly.
 
 #![no_std]
 #![feature(
@@ -17,6 +19,17 @@ pub trait ArrayExt<T, const N: usize> {
     /// Fallible version of `map`.
     /// The provided function will be run on every element until the array ends or an error is returned.
     ///
+    /// # Errors
+    /// 
+    /// If `f` returns an [`Err`], that error will be returned by this function.
+    /// The already initialized elements will be dropped when an error occurs.
+    /// The new array will be returned if no error occurs.
+    /// 
+    /// # Panics
+    ///
+    /// This function panics if `f` panics.
+    /// The already initialized elements will be dropped when a panic occurs.
+    ///
     /// # Examples
     ///
     /// ```
@@ -34,7 +47,11 @@ pub trait ArrayExt<T, const N: usize> {
         F: FnMut(T) -> Result<U, E>;
 
     /// Example of how `map` could be reimplemented in terms of [`try_map`](ArrayExt::try_map).
-    /// I'm pretty sure this is zero cost, but not 100% sure.
+    ///
+    /// # Panics
+    ///
+    /// This function panics if `f` panics.
+    /// The already initialized elements will be dropped when a panic occurs.
     ///
     /// # Examples
     ///
