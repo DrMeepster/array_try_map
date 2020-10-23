@@ -1,0 +1,1 @@
+initSidebarItems({"trait":[["ArrayExt","Extension of `[T; N]` to add methods"]]});
