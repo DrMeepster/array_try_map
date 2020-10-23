@@ -106,6 +106,7 @@ impl<T, const N: usize> ArrayExt<T, N> for [T; N] {
             initialized: 0,
         };
         for (src, dst) in core::array::IntoIter::new(self).zip(&mut dst) {
+            //CHANGED FROM CORE: match on `f(src)` instead of directly inputting it into `dst.write`
             match f(src) {
                 Ok(elem) => {
                     dst.write(elem);
@@ -119,7 +120,7 @@ impl<T, const N: usize> ArrayExt<T, N> for [T; N] {
         core::mem::forget(guard);
         // SAFETY: At this point we've properly initialized the whole array
         // and we just need to cast it to the correct type.
-        Ok(unsafe { core::mem::transmute_copy::<_, [U; N]>(&dst) })
+        Ok(unsafe { core::mem::transmute_copy::<_, [U; N]>(&dst) }) //CHANGED FROM CORE: Ok-wrapped
     }
 
     fn map2<F, U>(self, mut f: F) -> [U; N]
