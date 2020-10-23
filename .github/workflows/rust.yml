@@ -14,10 +14,27 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v2
+      - name: Checkout repo
+        uses: actions/checkout@v2
+        with:
+          path: repo 
+      - name: Checkout docs
+        uses: actions/checkout@v2
+        with:
+          ref: docs
+          path: docs
       - uses: actions-rs/toolchain@v1
         with:
           toolchain: nightly
-      - uses: actions-rs/cargo@v1
+      - run: |
+          cd repo
+          cargo test
+          cargo doc
+          cp target/doc/* $GITHUB_WORKSPACE/docs/
+      - uses: EndBug/add-and-commit@v5
         with:
-          command: test
+          branch: docs
+          path: docs
+          message: "documentation update" 
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
