@@ -30,7 +30,7 @@ jobs:
           cd repo
           cargo test
           cargo doc
-          cp target/doc/* $GITHUB_WORKSPACE/docs/
+          cp -r target/doc/* $GITHUB_WORKSPACE/docs/
       - uses: EndBug/add-and-commit@v5
         with:
           branch: docs
