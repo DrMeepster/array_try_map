@@ -10,7 +10,7 @@ env:
   CARGO_TERM_COLOR: always
 
 jobs:
-  test:
+  rust:
     runs-on: ubuntu-latest
 
     steps:
@@ -34,7 +34,7 @@ jobs:
       - uses: EndBug/add-and-commit@v5
         with:
           branch: docs
-          path: docs
+          cwd: docs
           message: "documentation update" 
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
