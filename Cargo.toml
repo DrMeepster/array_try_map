@@ -1,9 +1,11 @@
 [package]
 name = "array_try_map"
 version = "0.1.0"
-authors = ["DrMeepster <19316085+DrMeepster@users.noreply.github.com>"]
+authors = ["DrMeepster"]
 edition = "2018"
-
-# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
-
-[dependencies]
+description = "Adds a try_map method to arrays."
+readme = "README.md"
+repository = "https://github.com/DrMeepster/array_try_map/"
+license = "MIT OR Apache-2.0"
+keywords = ["array"]
+categories = ["no-std"]
