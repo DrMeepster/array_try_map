@@ -20,11 +20,11 @@ pub trait ArrayExt<T, const N: usize> {
     /// The provided function will be run on every element until the array ends or an error is returned.
     ///
     /// # Errors
-    /// 
+    ///
     /// If `f` returns an [`Err`], that error will be returned by this function.
     /// The already initialized elements will be dropped when an error occurs.
     /// The new array will be returned if no error occurs.
-    /// 
+    ///
     /// # Panics
     ///
     /// This function panics if `f` panics.
@@ -155,7 +155,7 @@ mod test {
     }
 
     #[test]
-    /// Tests that if the function panics, the initalized contents of the array will be dropped. 
+    /// Tests that if the function panics, the initalized contents of the array will be dropped.
     fn drop_on_panic() {
         static COUNTER: AtomicUsize = AtomicUsize::new(0);
         struct ObjectCounter;
@@ -183,9 +183,7 @@ mod test {
 
         let x = [0, 0, 0, 0];
 
-        let res = panic::catch_unwind(move || {
-            x.map2(f)
-        });
+        let res = panic::catch_unwind(move || x.map2(f));
 
         assert_eq!(COUNTER.load(Ordering::Acquire), 4);
 
@@ -193,25 +191,23 @@ mod test {
 
         let x = [0, 0, 0, 0, 255];
 
-        let _res = panic::catch_unwind(move || {
-            x.map2(f)
-        });
+        let _res = panic::catch_unwind(move || x.map2(f));
 
         assert_eq!(COUNTER.load(Ordering::Acquire), 0);
     }
 
     /// Tests that the function does not run after an error occurs.
     #[test]
-    fn short_circuit(){
+    fn short_circuit() {
         let mut counter = 0;
 
-        let x = [0,0,0,0];
+        let x = [0, 0, 0, 0];
 
-        let _ = x.try_map(|i|{
+        let _ = x.try_map(|i| {
             if i == 0 {
                 counter += 1;
                 Ok(())
-            }else{
+            } else {
                 Err(())
             }
         });
@@ -220,13 +216,13 @@ mod test {
 
         counter = 0;
 
-        let y = [0,0,255,0,0];
+        let y = [0, 0, 255, 0, 0];
 
-        let _ = y.try_map(|i|{
+        let _ = y.try_map(|i| {
             if i == 0 {
                 counter += 1;
                 Ok(())
-            }else{
+            } else {
                 Err(())
             }
         });
